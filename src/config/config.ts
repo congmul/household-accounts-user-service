@@ -13,23 +13,24 @@ const noEmptyString = makeValidator((str) => {
 
 const env = cleanEnv(process.env, {
   PORT: str({ default: "3000" }),
-  CLOUD_INSTANCE: noEmptyString(),
-  TENANT_ID: noEmptyString(),
-  CLIENT_ID: noEmptyString(),
-  CLIENT_SECRET: noEmptyString(),
+  MS_CLOUD_INSTANCE: noEmptyString(),
+  MS_TENANT_ID: noEmptyString(),
+  MS_CLIENT_ID: noEmptyString(),
+  MS_CLIENT_SECRET: noEmptyString(),
+  GOOGLE_CLIENT_ID: noEmptyString(),
+  GOOGLE_CLIENT_SECRET: noEmptyString(),
   REDIRECT_URI: noEmptyString(),
   POST_LOGOUT_REDIRECT_URI: noEmptyString(),
   GRAPH_API_ENDPOINT: noEmptyString(),
-  EXPRESS_SESSION_SECRET: noEmptyString(),
 });
 
 const config = {
   port: env.PORT,
   msalConfig: {
     auth: {
-      clientId: env.CLIENT_ID,
-      authority: env.CLOUD_INSTANCE + env.TENANT_ID,
-      clientSecret: env.CLIENT_SECRET,
+      clientId: env.MS_CLIENT_ID,
+      authority: env.MS_CLOUD_INSTANCE + env.MS_TENANT_ID,
+      clientSecret: env.MS_CLIENT_SECRET,
     },
     system: {
       loggerOptions: {
@@ -40,11 +41,16 @@ const config = {
         logLevel: 3,
       },
     },
-    redirect_uri: env.REDIRECT_URI,
+    redirect_uri: `${env.REDIRECT_URI}/ms`,
     post_logout_redirect_uri: env.POST_LOGOUT_REDIRECT_URI,
     graph_me_endpoint: env.GRAPH_API_ENDPOINT + "v1.0/me",
   },
-  express_session_secret: env.EXPRESS_SESSION_SECRET,
+  googleConfig: {
+    CLIENT_ID: env.GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
+    REDIRECT_URI: `${env.REDIRECT_URI}/google`,
+    POST_LOGOUT_REDIRECT_URI: env.POST_LOGOUT_REDIRECT_URI,
+  },
 };
 
 export default config;

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import config from "./config/config";
-import { swaggerRoute, loginRoutes, authRoutes } from "./routes";
+import { swaggerRoute, authRoutes } from "./routes";
 
 const app = express();
 
@@ -10,7 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", swaggerRoute);
-app.use("/login", loginRoutes);
 app.use("/auth", authRoutes);
 
 app.get("/health", (req: Request, res: Response) => {

@@ -5,34 +5,38 @@
 
 import express from "express";
 
-import authProvider from "../auth/AuthProvider";
+import msAuthProvider from "../auth/MSAuthProvider";
+import googleAuthProvider from "../auth/GoogleAuthProvider";
 import config from "../config/config";
 const { redirect_uri, post_logout_redirect_uri } = config.msalConfig;
 
 const router = express.Router();
 
 router.get(
-  "/auth-code-url",
-  authProvider.getAuthCodeUrl({
-    scopes: ["openid", "profile", "offline_access", "User.Read", "email"],
+  "/auth-code-url/ms",
+  msAuthProvider.getAuthCodeUrl({
+    scopes: [],
     redirectUri: redirect_uri,
     successRedirect: "/",
   }),
 );
 
 router.post(
-  "/redirect",
-  authProvider.handleRedirect({
-    scopes: ["openid", "profile", "offline_access", "User.Read", "email"],
+  "/redirect/ms",
+  msAuthProvider.handleRedirect({
+    scopes: [],
     redirectUri: redirect_uri,
   }),
 );
 
 router.get(
-  "/signout-url",
-  authProvider.logout({
+  "/signout-url/ms",
+  msAuthProvider.logout({
     postLogoutRedirectUri: post_logout_redirect_uri,
   }),
 );
+
+router.get("/auth-code-url/google", googleAuthProvider.getAuthCodeUrl());
+router.get("/redirect/google", googleAuthProvider.handleRedirect());
 
 export default router;
