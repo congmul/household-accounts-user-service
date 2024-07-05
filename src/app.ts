@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import config from "./config/config";
-import { swaggerRoute, loginRoutes } from "./routes";
+import { swaggerRoute, loginRoutes, authRoutes } from "./routes";
 
 const app = express();
 
@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", swaggerRoute);
 app.use("/login", loginRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({
@@ -19,4 +20,4 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // Start the server on the port
-app.listen(3000, () => console.log(`Listening on PORT: ${config.PORT}`));
+app.listen(3000, () => console.log(`Listening on PORT: ${config.port}`));
