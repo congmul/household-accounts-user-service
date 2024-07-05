@@ -15,6 +15,8 @@ const env = cleanEnv(process.env, {
   PORT: str({ default: "3000" }),
   MONGO_URI: noEmptyString(),
   MONGO_DB_NAME: noEmptyString(),
+  JWT_SECRET: noEmptyString(),
+  EXPIRES_IN: str({ default: "1h" }),
   MS_CLOUD_INSTANCE: noEmptyString(),
   MS_TENANT_ID: noEmptyString(),
   MS_CLIENT_ID: noEmptyString(),
@@ -32,11 +34,16 @@ const config = {
     URI: env.MONGO_URI,
     DB_NAME: env.MONGO_DB_NAME,
   },
+  auth: {
+    JWT_SECRET: env.JWT_SECRET,
+    EXPIRES_IN: env.EXPIRES_IN,
+  },
   msalConfig: {
     auth: {
       clientId: env.MS_CLIENT_ID,
       authority: env.MS_CLOUD_INSTANCE + env.MS_TENANT_ID,
       clientSecret: env.MS_CLIENT_SECRET,
+      tenantId: env.MS_TENANT_ID,
     },
     system: {
       loggerOptions: {

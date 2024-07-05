@@ -10,14 +10,19 @@ const logger = winston.createLogger({
   },
   format: winston.format.combine(
     winston.format.timestamp(),
-    winston.format.printf(({ timestamp, level, message }) => {
-      return `${timestamp} [${level}]: ${message}`;
+    winston.format.printf(({ timestamp, level, message, service, ...meta }) => {
+      if (level === "debug" || level === "error") {
+        return `${timestamp} [${level}]: ${message} ${Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ""}`;
+      } else {
+        return `${timestamp} [${level}]: ${message}`;
+      }
     }),
   ),
   defaultMeta: { service: "account-service" },
   transports: [
     new winston.transports.Console({ level: "debug", handleExceptions: true }),
     new winston.transports.File({
+      level: "debug",
       filename: `${__dirname}/../logs/app.log`,
       handleExceptions: true,
     }),
