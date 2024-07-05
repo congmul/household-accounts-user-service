@@ -1,6 +1,7 @@
 import msal from "@azure/msal-node";
 import axios from "axios";
 import config from "../config/config";
+import logger from "../utils/logger";
 import { userService } from "../services";
 
 class AuthProvider {
@@ -82,24 +83,23 @@ class AuthProvider {
       };
 
       try {
+        logger.info("MS Redirect API");
         const msalInstance = this.getMsalInstance(this.msalConfig);
-
         const tokenResponse = await msalInstance.acquireTokenByCode(
           authCodeRequest,
           req.body,
         );
-        const tokens = {
-          tokenCache: msalInstance.getTokenCache().serialize(),
-          idToken: tokenResponse.idToken,
-          account: tokenResponse.account,
-        };
-        const state = JSON.parse(
-          this.cryptoProvider.base64Decode(req.body.state),
-        );
-        // TODO: need to store a user into my DB
-        // await userService.create({email: 'jehyun', firstName: "jehyun", lastName: "jung"});
-
-        res.status(200).send({ tokens, state });
+        const { userInfo, accessToken } = await userService.create({
+          email: tokenResponse.account?.username || "",
+          fullname: tokenResponse.account?.name || "",
+          joinThrough: "ms",
+        });
+        res
+          .status(200)
+          .send({
+            userInfo,
+            tokens: { accessToken, idToken: tokenResponse.idToken },
+          });
       } catch (error) {
         next(error);
       }
@@ -155,7 +155,8 @@ class AuthProvider {
       try {
         const authCodeUrlResponse =
           await msalInstance.getAuthCodeUrl(authCodeUrlRequest);
-        res.send({ authCodeUrl: authCodeUrlResponse });
+        // res.send({ authCodeUrl: authCodeUrlResponse });
+        res.redirect(authCodeUrlResponse);
       } catch (error) {
         next(error);
       }
@@ -195,7 +196,7 @@ class AuthProvider {
       const response = await axios.get(endpoint);
       return await response.data;
     } catch (error) {
-      console.log(error);
+      logger.error(error);
     }
   }
 }

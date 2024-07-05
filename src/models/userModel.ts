@@ -2,6 +2,11 @@ import { model, Schema } from "mongoose";
 import { IUser } from "../types";
 
 const userSchema = new Schema<IUser>({
+  fullname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -21,6 +26,10 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: String,
+  },
+  joinThrough: {
+    type: String,
+    enum: ["custom", "ms", "google"],
   },
   lastLogin: {
     type: Date,
