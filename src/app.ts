@@ -3,6 +3,7 @@ import cors from "cors";
 import config from "./config/config";
 import dbLoader from "./config/db";
 import { swaggerRoute, authRoutes } from "./routes";
+import logger from "./utils/logger";
 
 const app = express();
 
@@ -22,4 +23,4 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // Start the server on the port
-app.listen(3000, () => console.log(`Listening on PORT: ${config.port}`));
+app.listen(3000, () => logger.info(`Listening on PORT: ${config.port}`));
