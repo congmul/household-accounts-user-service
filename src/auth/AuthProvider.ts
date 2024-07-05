@@ -95,6 +95,7 @@ class AuthProvider {
         const state = JSON.parse(
           this.cryptoProvider.base64Decode(req.body.state),
         );
+        // TODO: need to store a user into my DB
         res.status(200).send({ tokens, state });
       } catch (error) {
         next(error);
