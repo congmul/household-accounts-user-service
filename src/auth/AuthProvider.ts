@@ -56,7 +56,6 @@ class AuthProvider {
         this.msalConfig.auth.authorityMetadata =
           JSON.stringify(authorityMetadata);
       }
-      console.log("this.msalConfig:", this.msalConfig);
       const msalInstance = this.getMsalInstance(this.msalConfig);
 
       // trigger the first leg of auth code flow
