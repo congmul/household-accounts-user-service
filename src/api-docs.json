@@ -1,0 +1,19 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Account Service",
+        "version": "0.0.1",
+        "description": "",
+        "contact": {
+        "name": "Jehyun Jung",
+        "url": "",
+        "email": "jehyunjung@gmail.com"
+        }
+    },
+    "servers": [
+        {
+        "url": "http://localhost:3000",
+        "description": "local url"
+        }
+    ]
+}
