@@ -1,5 +1,7 @@
 import config from "../config/config";
 import axios from "axios";
+import logger from "../utils/logger";
+import { userService } from "../services";
 
 class AuthProvider {
   googleConfig: any;
@@ -11,7 +13,8 @@ class AuthProvider {
   getAuthCodeUrl() {
     return async (req: any, res: any, next: any) => {
       const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.googleConfig.CLIENT_ID}&redirect_uri=${this.googleConfig.REDIRECT_URI}&response_type=code&scope=profile email`;
-      res.send({ authCodeUrl: url });
+      // res.send({ authCodeUrl: url });
+      res.redirect(url);
     };
   }
 
@@ -33,7 +36,6 @@ class AuthProvider {
         );
 
         const { access_token, id_token } = data;
-
         // Use access_token or id_token to fetch user profile
         const { data: profile } = await axios.get(
           "https://www.googleapis.com/oauth2/v1/userinfo",
@@ -43,11 +45,20 @@ class AuthProvider {
         );
 
         // Code to handle user authentication and retrieval using the profile data
-        console.log(profile);
-        res.send({ profile });
-        // res.redirect('/');
+        logger.info(profile);
+
+        const { userInfo, accessToken } = await userService.create({
+          email: profile.email || "",
+          fullname: profile.name || "",
+          joinThrough: "google",
+        });
+
+        res.status(200).send({
+          userInfo,
+          tokens: { accessToken, idToken: id_token },
+        });
       } catch (error) {
-        console.log(error);
+        logger.error(error);
       }
     };
   }
