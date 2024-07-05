@@ -15,5 +15,38 @@
         "url": "http://localhost:3000",
         "description": "local url"
         }
-    ]
+    ],
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/auth/auth-code-url/ms": {
+            "get": {
+                "tags": ["Authentication"]
+            }
+        },
+        "/auth/redirect/ms": {
+            "post": {
+                "tags": ["Authentication"]
+            }
+        },
+        "/auth/signout-url/ms": {
+            "post": {
+                "tags": ["Authentication"]
+            }
+        },
+        "/auth/auth-code-url/google": {
+            "get": {
+                "tags": ["Authentication"]
+            }
+        },
+        "/auth/redirect/google": {
+            "post": {
+                "tags": ["Authentication"]
+            }
+        }
+    }
 }
