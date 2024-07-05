@@ -8,6 +8,7 @@
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/app.ts",
     "format": "prettier --write 'src/**/*.ts'",
+    "precommit": "lint-staged",
     "prepare": "husky"
   },
   "keywords": [],
