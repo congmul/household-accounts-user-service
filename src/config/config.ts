@@ -7,7 +7,7 @@ const noEmptyString = makeValidator((str) => {
   if (!str) {
     throw new Error("Cannot be an empty string");
   } else {
-    str
+    str;
   }
 });
 
