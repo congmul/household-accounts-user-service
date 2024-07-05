@@ -92,14 +92,12 @@ class AuthProvider {
         const { userInfo, accessToken } = await userService.create({
           email: tokenResponse.account?.username || "",
           fullname: tokenResponse.account?.name || "",
-          joinThrough: "ms",
+          joinThrough: "microsoft",
         });
-        res
-          .status(200)
-          .send({
-            userInfo,
-            tokens: { accessToken, idToken: tokenResponse.idToken },
-          });
+        res.status(200).send({
+          userInfo,
+          tokens: { accessToken, idToken: tokenResponse.idToken },
+        });
       } catch (error) {
         next(error);
       }

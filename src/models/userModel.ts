@@ -29,7 +29,7 @@ const userSchema = new Schema<IUser>({
   },
   joinThrough: {
     type: String,
-    enum: ["custom", "ms", "google"],
+    enum: ["custom", "microsoft", "google"],
   },
   lastLogin: {
     type: Date,
