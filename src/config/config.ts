@@ -13,6 +13,8 @@ const noEmptyString = makeValidator((str) => {
 
 const env = cleanEnv(process.env, {
   PORT: str({ default: "3000" }),
+  MONGO_URI: noEmptyString(),
+  MONGO_DB_NAME: noEmptyString(),
   MS_CLOUD_INSTANCE: noEmptyString(),
   MS_TENANT_ID: noEmptyString(),
   MS_CLIENT_ID: noEmptyString(),
@@ -26,6 +28,10 @@ const env = cleanEnv(process.env, {
 
 const config = {
   port: env.PORT,
+  db: {
+    URI: env.MONGO_URI,
+    DB_NAME: env.MONGO_DB_NAME,
+  },
   msalConfig: {
     auth: {
       clientId: env.MS_CLIENT_ID,

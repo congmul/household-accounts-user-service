@@ -1,6 +1,7 @@
 import msal from "@azure/msal-node";
 import axios from "axios";
 import config from "../config/config";
+import { userService } from "../services";
 
 class AuthProvider {
   msalConfig: any;
@@ -96,6 +97,8 @@ class AuthProvider {
           this.cryptoProvider.base64Decode(req.body.state),
         );
         // TODO: need to store a user into my DB
+        // await userService.create({email: 'jehyun', firstName: "jehyun", lastName: "jung"});
+
         res.status(200).send({ tokens, state });
       } catch (error) {
         next(error);

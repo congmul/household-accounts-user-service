@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import config from "./config/config";
+import dbLoader from "./config/db";
 import { swaggerRoute, authRoutes } from "./routes";
 
 const app = express();
@@ -8,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+dbLoader();
 
 app.use("/", swaggerRoute);
 app.use("/auth", authRoutes);
