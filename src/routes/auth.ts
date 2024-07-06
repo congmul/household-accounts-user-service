@@ -1,10 +1,5 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
-
 import express from "express";
-
+import { userController } from "../controllers";
 import msAuthProvider from "../auth/MSAuthProvider";
 import googleAuthProvider from "../auth/GoogleAuthProvider";
 import config from "../config/config";
@@ -38,5 +33,8 @@ router.get(
 
 router.get("/auth-code-url/google", googleAuthProvider.getAuthCodeUrl());
 router.get("/redirect/google", googleAuthProvider.handleRedirect());
+
+router.post("/signup", userController.createUser);
+router.post("/login", userController.loginUser);
 
 export default router;

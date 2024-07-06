@@ -11,12 +11,13 @@ const userService = {
     if (user == null) {
       logger.info("Create a new user");
       const nameArr = userInfo.fullname.split(" ");
-      const [firstName, lastName] = nameArr;
+      const [firstName, ...lastName] = nameArr;
       const data = {
         email: userInfo.email,
+        password: userInfo.password,
         fullname: userInfo.fullname,
         firstName,
-        lastName,
+        lastName: lastName.join(" "),
         joinThrough: userInfo.joinThrough,
       };
       const newUser = new User(data);

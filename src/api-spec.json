@@ -23,6 +23,16 @@
         }
     ],
     "paths": {
+        "/auth/singup": {
+            "post": {
+                "tags": ["Authentication"]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["Authentication"]
+            }
+        },
         "/auth/auth-code-url/ms": {
             "get": {
                 "tags": ["Authentication"]
