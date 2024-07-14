@@ -11,7 +11,7 @@ Account Service is a Node.js application that provides user account management f
 - [Usage](#usage)
 - [Endpoints](#endpoints)
 - [User Flows](#user-flows)
-- [Directory Structure](#directory-structure)
+- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -53,7 +53,7 @@ Local: [API-specification](http://locahost:3000/api-spec)
  * The server receives the authorization code and exchange it for an access token, ID token, and refresh token.
  * The server can then decode the ID token to get user information and store the tokens securely.
 
-## Directory Structure
+## Project Structure
 ```bash
 account-service/
   ├── src/ 
