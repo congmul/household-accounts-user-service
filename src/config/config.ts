@@ -26,6 +26,7 @@ const env = cleanEnv(process.env, {
   REDIRECT_URI: noEmptyString(),
   POST_LOGOUT_REDIRECT_URI: noEmptyString(),
   GRAPH_API_ENDPOINT: noEmptyString(),
+  APP_INSIGHTS_CONN_STRING: noEmptyString(),
 });
 
 const config = {
@@ -63,6 +64,9 @@ const config = {
     CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
     REDIRECT_URI: `${env.REDIRECT_URI}/google`,
     POST_LOGOUT_REDIRECT_URI: env.POST_LOGOUT_REDIRECT_URI,
+  },
+  appInsights: {
+    APP_INSIGHTS_CONN_STRING: env.APP_INSIGHTS_CONN_STRING,
   },
 };
 
