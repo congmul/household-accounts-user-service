@@ -81,4 +81,4 @@ account-service/
   ├── package.json
   └── .env
 ```
-#
+# Use NPM to manage packages
