@@ -1,4 +1,7 @@
 # account-service
+This repository contains the backend service built with Express and Typescript.
+
+[API Specification](https://kang-jung-account-service.azurewebsites.net/api-spec/)
 
 ## Overview
 
