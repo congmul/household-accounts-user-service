@@ -36,8 +36,7 @@ jobs:
       #     name: node-app
       #     path: release.zip
       - name: Create tarball for deployment
-        run: |
-          tar -czf release.tar.gz .
+        run: tar -czf release.tar.gz ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
