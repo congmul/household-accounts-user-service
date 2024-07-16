@@ -1,12 +1,11 @@
 import express, { Request, Response } from "express";
+// import * as appInsights from "applicationinsights";
 import cors from "cors";
 import config from "./config/config";
 import dbLoader from "./config/db";
 import { swaggerRoute, authRoutes } from "./routes";
 import logger from "./utils/logger";
-import * as appInsights from "applicationinsights";
-
-appInsights.setup(config.appInsights.APP_INSIGHTS_CONN_STRING).start();
+// appInsights.setup(config.appInsights.APP_INSIGHTS_CONN_STRING).start();
 
 const app = express();
 
