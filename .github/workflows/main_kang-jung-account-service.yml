@@ -37,7 +37,7 @@ jobs:
       #     path: release.zip
       - name: Create tarball for deployment
         run: |
-          tar -czf release.tar.gz . --exclude='./node_modules' --exclude='./.git' --exclude='./.github' --exclude='./tests' --exclude='./*.DS_Store' --exclude='./*.zip'
+          tar -czf release.tar.gz .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
