@@ -53,7 +53,14 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
+      - name: Check if grabbing correct values
+        steps: 
+          - bash: |
+            echo ${{ secrets.AZUREAPPSERVICE_CLIENTID_4096586990E3435E93D2446071C58DA6 }}
+            echo ${{ secrets.AZUREAPPSERVICE_TENANTID_74A2CAE85BB243BB93CEB6DC20EDEB06 }}
+            echo ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_836E732E75A34BE6AEF728E4CEC11184 }}
+            
       - name: Login to Azure
         uses: azure/login@v1
         with:
