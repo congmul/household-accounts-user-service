@@ -25,4 +25,4 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // Start the server on the port
-app.listen(3000, () => logger.info(`Listening on PORT: ${config.port}`));
+app.listen(config.port, () => logger.info(`Listening on PORT: ${config.port}`));
