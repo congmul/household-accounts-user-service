@@ -3,59 +3,125 @@
     "info": {
         "title": "Account Service",
         "version": "0.0.1",
-        "description": "",
+        "description": "Account Service is a Node.js application that provides user account management functionalities, including user registration, authentication, and authorization. This service uses Express.js for the server, Mongoose for database interaction, and MSAL for handling Microsoft authentication.",
         "contact": {
-        "name": "Jehyun Jung",
-        "url": "",
-        "email": "jehyunjung@gmail.com"
+            "name": "Jehyun Jung",
+            "email": "jehyunjung@gmail.com"
         }
     },
     "servers": [
         {
-        "url": "http://localhost:3000",
-        "description": "local url"
+            "url": "http://localhost:3000",
+            "description": "local url"
+        },
+        {
+            "url": "kang-jung-account-service.azurewebsites.net",
+            "description": "Development env"
         }
     ],
     "tags": [
         {
+            "name": "Operational",
+            "description": "Operational endpoints used to check the status of server"
+        },
+        {
             "name": "Authentication",
-            "description": ""
+            "description": "Paths that handle user authentication. It will provide tokens."
         }
     ],
     "paths": {
-        "/auth/singup": {
+        "/health": {
+            "get": {
+                "tags": ["Operational"],
+                "operationId": "get-health",
+                "summary": "Checks the operational status of the API",
+                "description": "Checks the operational status of the API",
+                "responses": {
+                    "200": {
+                        "description": "Account Service is healthy and ready to handle your requests.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "description": "health endpoint response",
+                                    "required": ["msg"],
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Account Service is healthy and ready to handle your requests."
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "msg": "Account Service is healthy and ready to handle your requests."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "API unavailable"
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
             "post": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "post-signup",
+                "summary": "Onboarding process (Create a new user)",
+                "description": "Onboarding process (Create a new user)"
             }
         },
         "/auth/login": {
             "post": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "post-login",
+                "summary": "Login to get access token",
+                "description": "Login to get access token"
             }
         },
         "/auth/auth-code-url/ms": {
             "get": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "get-auth-code-url-ms",
+                "summary": "Microsoft Authentication Library Redriect URL",
+                "description": "Microsoft Authentication Library Redirect URL. It will provide redirect URL with 'code'"
             }
         },
         "/auth/redirect/ms": {
             "post": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "post-redirect-ms",
+                "summary": "Handle state from MSAL to get Tokens",
+                "description": "Handle state from MSAL to get Tokens"
             }
         },
         "/auth/signout-url/ms": {
             "post": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "post-signout-url-ms",
+                "summary": "Revoke tokens",
+                "description": "Revoke tokens"
             }
         },
         "/auth/auth-code-url/google": {
             "get": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "get-auth-code-url-google",
+                "summary": "Google Redriect URL",
+                "description": "Google Redriect URL"
             }
         },
         "/auth/redirect/google": {
             "post": {
-                "tags": ["Authentication"]
+                "tags": ["Authentication"],
+                "operationId": "post-redirect-google",
+                "summary": "Handle state from Google to get Tokens",
+                "description": "Handle state from Google to get Tokens"
             }
         }
     }
