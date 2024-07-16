@@ -68,8 +68,3 @@ jobs:
           app-name: 'kang-jung-account-service'
           slot-name: 'Production'
           package: .
-        # Increase Verbosity of Deployment Logs
-        env:
-          SCM_DO_BUILD_DURING_DEPLOYMENT: true
-          SCM_LOGSTREAMTRACELEVEL: 4
-          SCM_TRACELISTENER: true  
