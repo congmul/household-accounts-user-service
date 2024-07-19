@@ -3,6 +3,7 @@ import { userController } from "../controllers";
 import msAuthProvider from "../auth/MSAuthProvider";
 import googleAuthProvider from "../auth/GoogleAuthProvider";
 import config from "../config/config";
+import { validate, validCreateUser, validLoginUser } from "../validate";
 const { redirect_uri, post_logout_redirect_uri } = config.msalConfig;
 
 const router = express.Router();
@@ -34,7 +35,7 @@ router.get(
 router.get("/auth-code-url/google", googleAuthProvider.getAuthCodeUrl());
 router.get("/redirect/google", googleAuthProvider.handleRedirect());
 
-router.post("/signup", userController.createUser);
-router.post("/login", userController.loginUser);
+router.post("/signup", validate(validCreateUser), userController.createUser);
+router.post("/login", validate(validLoginUser), userController.loginUser);
 
 export default router;

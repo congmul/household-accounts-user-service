@@ -7,7 +7,11 @@ const userController = {
   createUser: async (req: any, res: any) => {
     try {
       const hashedPass = await passwordHash.hash(req.body.password);
-      await userService.create({ ...req.body, password: hashedPass });
+      await userService.create({
+        ...req.body,
+        password: hashedPass,
+        joinThrough: "custom",
+      });
       res.status(201).send({ msg: "New user created successfully" });
     } catch (err) {
       logger.error(err);
