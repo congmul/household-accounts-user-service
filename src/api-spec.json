@@ -1,9 +1,9 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Account Service",
+        "title": "Household Accounts User Service",
         "version": "0.0.1",
-        "description": "Account Service is a Node.js application that provides user account management functionalities, including user registration, authentication, and authorization. This service uses Express.js for the server, Mongoose for database interaction, and MSAL for handling Microsoft authentication.",
+        "description": "Household Accounts User Service is a Node.js application that provides user account management functionalities, including user registration, authentication, and authorization. This service uses Express.js for the server, Mongoose for database interaction, and MSAL for handling Microsoft authentication.",
         "contact": {
             "name": "Jehyun Jung",
             "email": "jehyunjung@gmail.com"

@@ -1,4 +1,4 @@
-# account-service
+# Household Accounts User Service
 This repository contains the backend service built with Express and Typescript.
 
 [API Specification](https://kang-jung-account-service.azurewebsites.net/api-spec/)
@@ -22,7 +22,7 @@ Account Service is a Node.js application that provides user account management f
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/congmul/account-service.git
+   git clone git@github.com:congmul/household-accounts-user-service.git
    cd account-service
     ```
 2. Install dependencies:
