@@ -1,6 +1,6 @@
 {
-  "name": "account-service",
-  "version": "0.2.1",
+  "name": "household-accounts-user-service",
+  "version": "0.2.2",
   "description": "",
   "main": "app.ts",
   "scripts": {
@@ -10,8 +10,8 @@
     "format": "prettier --write 'src/**/*.ts'",
     "precommit": "lint-staged",
     "prepare": "husky",
-    "build-docker": "docker build . -t account-service",
-    "run-docker": "docker run -d -p 3000:3000 --env-file .env account-service"
+    "build-docker": "docker build . -t household-accounts-user-service",
+    "run-docker": "docker run -d -p 3000:3000 --env-file .env household-accounts-user-service"
   },
   "resolutions": {
     "glob": "10.3.15"
