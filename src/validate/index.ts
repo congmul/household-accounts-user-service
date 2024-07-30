@@ -3,4 +3,5 @@ export {
   validCreateUser,
   validLoginUser,
   validGetUser,
+  validCheckExist,
 } from "./user.validation";

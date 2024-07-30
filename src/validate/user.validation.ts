@@ -23,3 +23,8 @@ export const validGetUser = {
     type: Joi.string().valid("email", "id").required(),
   }),
 };
+export const validCheckExist = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(validObjectId).required(),
+  }),
+};
