@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { validObjectId } from ".";
 
 export const validCreateUser = {
   body: Joi.object().keys({
@@ -12,5 +13,13 @@ export const validLoginUser = {
   body: Joi.object().keys({
     email: Joi.string().email(),
     password: Joi.string().required(),
+  }),
+};
+export const validGetUser = {
+  params: Joi.object().keys({
+    identifier: Joi.string().custom(validObjectId).required(),
+  }),
+  query: Joi.object().keys({
+    type: Joi.string().valid("email", "id").required(),
   }),
 };
