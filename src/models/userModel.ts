@@ -45,5 +45,9 @@ const userSchema = new Schema<IUser>({
   },
 });
 
+userSchema.pre("findOneAndUpdate", function () {
+  this.set({ updatedAt: Date.now() });
+});
+
 const User = model("User", userSchema);
 export default User;
