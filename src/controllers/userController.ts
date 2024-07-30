@@ -1,7 +1,7 @@
+import { Request, Response } from "express";
 import logger from "../utils/logger";
 import passwordHash from "../utils/hashHandler";
 import { userService } from "../services";
-import User from "../models/userModel";
 
 const userController = {
   createUser: async (req: any, res: any) => {
@@ -20,9 +20,14 @@ const userController = {
   },
   loginUser: async (req: any, res: any) => {
     try {
-      const user = await User.findOne({ email: req.body.email }).lean();
-      if (user == null || user.password == null) {
-        return res.status(404).send({ msg: "There is no matched user" });
+      const user = await userService.getUserByEmail(req.body.email);
+
+      if (!user.password) {
+        return res
+          .status(404)
+          .send({
+            message: `There is no matched user with the email, ${req.body.email}`,
+          });
       }
       const isMatched = await passwordHash.compare(
         req.body.password,
@@ -32,9 +37,31 @@ const userController = {
         const response = await userService.create({ ...user });
         res.status(200).send(response);
       }
-    } catch (err) {
+    } catch (err: any) {
       logger.error(err);
-      res.status(500).send(err);
+      if (err.code === "404") {
+        res.status(404).send({ message: err.message });
+      } else {
+        res.status(500).send(err);
+      }
+    }
+  },
+  getUser: async (req: Request, res: Response) => {
+    try {
+      let user: any;
+      if (req.params.type === "email") {
+        user = await userService.getUserByEmail(req.body.identifier);
+      } else {
+        user = await userService.getUserById(req.body.identifier);
+      }
+      return user;
+    } catch (err: any) {
+      logger.error(err);
+      if (err.code === "404") {
+        res.status(404).send({ message: err.message });
+      } else {
+        res.status(500).send(err);
+      }
     }
   },
 };

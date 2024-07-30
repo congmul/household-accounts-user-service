@@ -30,6 +30,36 @@ const userService = {
       return { userInfo: { ...user }, accessToken };
     }
   },
+  getUserById: async (userId: string) => {
+    try {
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+        throw {
+          message: `There is no matched user with the ID, ${userId}`,
+          code: "404",
+        };
+      }
+      return user;
+    } catch (err: any) {
+      logger.error(err);
+      throw new Error("Error during reading a user from DB.");
+    }
+  },
+  getUserByEmail: async (email: string) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw {
+          message: `There is no matched user with the email, ${email}`,
+          code: "404",
+        };
+      }
+      return user;
+    } catch (err: any) {
+      logger.error(err);
+      throw new Error("Error during reading a user from DB.");
+    }
+  },
 };
 
 export default userService;
