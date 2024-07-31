@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import logger from "../utils/logger";
 import pick from "../utils/pick";
 import Joi from "joi";
+import { isValidObjectId } from "mongoose";
 
-const validate = (schema: Record<string, any>) => {
+export const validate = (schema: Record<string, any>) => {
   return async (req: Request, _res: Response, next: NextFunction) => {
     const validSchema = await pick(schema, ["params", "query", "body"]);
     const object = await pick(req, Object.keys(validSchema));
@@ -23,4 +24,10 @@ const validate = (schema: Record<string, any>) => {
   };
 };
 
-export default validate;
+export const validObjectId = (value: string, helpers: any) => {
+  if (isValidObjectId(value)) {
+    return value;
+  } else {
+    return helpers.message("ID must be mongoDB ObjectId");
+  }
+};

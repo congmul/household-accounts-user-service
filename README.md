@@ -1,7 +1,7 @@
 # Household Accounts User Service
 This repository contains the backend service built with Express and Typescript.
 
-[API Specification](https://kang-jung-account-service.azurewebsites.net/api-spec/)
+[API Specification](https://household-accounts-user-service.azurewebsites.net/api-spec/)
 
 ## Overview
 

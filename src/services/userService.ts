@@ -2,6 +2,7 @@ import User from "../models/userModel";
 import { IUser } from "../types";
 import logger from "../utils/logger";
 import { createJwt } from "../utils/jwtHandler";
+import AppError from "../utils/errorHandler";
 
 const userService = {
   create: async (userInfo: IUser) => {
@@ -28,6 +29,44 @@ const userService = {
     } else {
       const accessToken = await createJwt({ ...user });
       return { userInfo: { ...user }, accessToken };
+    }
+  },
+  getUserById: async (userId: string) => {
+    try {
+      const user = await User.findOne({ _id: userId });
+      if (!user) {
+        throw new AppError(
+          `There is no matched user with the ID, ${userId}.`,
+          404,
+        );
+      }
+      return user;
+    } catch (err: any) {
+      logger.error(err);
+      if (err.statusCode === 404) {
+        throw err;
+      } else {
+        throw new Error("Error during reading a user from DB.");
+      }
+    }
+  },
+  getUserByEmail: async (email: string) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AppError(
+          `There is no matched user with the email, ${email}.`,
+          404,
+        );
+      }
+      return user;
+    } catch (err: any) {
+      logger.error(err);
+      if (err.statusCode === 404) {
+        throw err;
+      } else {
+        throw new Error("Error during reading a user from DB.");
+      }
     }
   },
 };
