@@ -44,9 +44,9 @@ const userService = {
     } catch (err: any) {
       logger.error(err);
       if (err.statusCode === 404) {
-        throw err;
+        throw new AppError(err.message, err.statusCode);
       } else {
-        throw new Error("Error during reading a user from DB.");
+        throw new AppError("Error during reading a user from DB.", 500);
       }
     }
   },
