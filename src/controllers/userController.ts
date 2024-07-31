@@ -69,7 +69,7 @@ const userController = {
     } catch (err: any) {
       logger.error(err);
       if (err.statusCode === 404) {
-        res.status(404).send({ message: err.message });
+        res.status(404).send({ message: "user not found" });
       } else {
         res.status(500).send(err);
       }
