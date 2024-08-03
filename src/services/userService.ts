@@ -8,7 +8,9 @@ const userService = {
   create: async (userInfo: IUser) => {
     // Check if incomming user exists
 
-    const user = await User.findOne({ email: userInfo.email }).lean();
+    const user = await User.findOne({ email: userInfo.email })
+      .select("-password")
+      .lean();
     if (user == null) {
       logger.info("Create a new user");
       const nameArr = userInfo.fullname.split(" ");
@@ -23,7 +25,9 @@ const userService = {
       };
       const newUser = new User(data);
       await newUser.save();
-      const user = await User.findOne({ email: userInfo.email }).lean();
+      const user = await User.findOne({ email: userInfo.email })
+        .select("-password")
+        .lean();
       const accessToken = await createJwt({ ...user });
       return { userInfo: { ...user }, accessToken };
     } else {
@@ -34,7 +38,7 @@ const userService = {
   },
   getUserById: async (userId: string) => {
     try {
-      const user = await User.findOne({ _id: userId });
+      const user = await User.findOne({ _id: userId }).select("-password");
       if (!user) {
         throw new AppError(
           `There is no matched user with the ID, ${userId}.`,
