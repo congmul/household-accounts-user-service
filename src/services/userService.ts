@@ -27,6 +27,7 @@ const userService = {
       const accessToken = await createJwt({ ...user });
       return { userInfo: { ...user }, accessToken };
     } else {
+      logger.info("Login a user and create Access token");
       const accessToken = await createJwt({ ...user });
       return { userInfo: { ...user }, accessToken };
     }

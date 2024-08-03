@@ -32,7 +32,8 @@ const userController = {
         user.password,
       );
       if (isMatched) {
-        const response = await userService.create({ ...user });
+        console.log(user, "in matched");
+        const response = await userService.create(user);
         res.status(200).send(response);
       }
     } catch (err: any) {
