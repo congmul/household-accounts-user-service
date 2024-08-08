@@ -9,7 +9,7 @@ const { redirect_uri, post_logout_redirect_uri } = config.msalConfig;
 const router = express.Router();
 
 router.get(
-  "/auth-code-url/ms",
+  "/login/ms",
   msAuthProvider.getAuthCodeUrl({
     scopes: [],
     redirectUri: redirect_uri,
