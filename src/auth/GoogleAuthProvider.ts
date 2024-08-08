@@ -1,69 +1,65 @@
 import config from "../config/config";
-import axios from "axios";
 import logger from "../utils/logger";
 import { userService } from "../services";
+import { OAuth2Client } from "google-auth-library";
 
 class AuthProvider {
-  googleConfig: any;
-
-  constructor(googleConfig: any) {
-    this.googleConfig = googleConfig;
+  client: any;
+  constructor(OAuth2Client: any) {
+    this.client = OAuth2Client;
   }
-
-  getAuthCodeUrl() {
-    return async (req: any, res: any, next: any) => {
-      const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.googleConfig.CLIENT_ID}&redirect_uri=${this.googleConfig.REDIRECT_URI}&response_type=code&scope=profile email`;
-      // res.send({ authCodeUrl: url });
-      res.redirect(url);
+  auth() {
+    // First function for google auth, then  redirect to handleRedirect Function.
+    return (req: any, res: any) => {
+      logger.info("Auth google");
+      const authorizeUrl = this.client.generateAuthUrl({
+        access_type: "offline",
+        scope: [
+          "https://www.googleapis.com/auth/userinfo.profile",
+          "https://www.googleapis.com/auth/userinfo.email",
+        ],
+      });
+      res.send({ authorizeUrl });
     };
   }
-
   handleRedirect() {
     return async (req: any, res: any, next: any) => {
-      const { code } = req.query;
+      logger.info("Login Redirect process");
 
+      const { code } = req.query;
       try {
         // Exchange authorization code for access token
-        const { data } = await axios.post(
-          "https://oauth2.googleapis.com/token",
-          {
-            client_id: this.googleConfig.CLIENT_ID,
-            client_secret: this.googleConfig.CLIENT_SECRET,
-            code,
-            redirect_uri: this.googleConfig.REDIRECT_URI,
-            grant_type: "authorization_code",
-          },
-        );
-
-        const { access_token, id_token } = data;
-        // Use access_token or id_token to fetch user profile
-        const { data: profile } = await axios.get(
-          "https://www.googleapis.com/oauth2/v1/userinfo",
-          {
-            headers: { Authorization: `Bearer ${access_token}` },
-          },
-        );
-
-        // Code to handle user authentication and retrieval using the profile data
-        logger.info(profile);
+        const r = await this.client.getToken(code);
+        const idToken = r.tokens.id_token;
+        const ticket = await this.client.verifyIdToken({
+          idToken,
+          audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
 
         const { userInfo, accessToken } = await userService.create({
-          email: profile.email || "",
-          fullname: profile.name || "",
+          email: payload.email || "",
+          fullname: payload.name || "",
           joinThrough: "google",
         });
-
-        res.status(200).send({
-          userInfo,
-          tokens: { accessToken, idToken: id_token },
-        });
+        // / Redirect to client with query parameters
+        res.redirect(
+          `http://localhost:3000/login-process?accessToken=${accessToken}&userInfo=${encodeURIComponent(JSON.stringify(userInfo))}`,
+        );
       } catch (error) {
-        logger.error(error);
+        console.log(error);
+        res.status(500).json(error);
       }
     };
   }
 }
 
-const authProvider = new AuthProvider(config.googleConfig);
+const authProvider = new AuthProvider(
+  new OAuth2Client(
+    config.googleConfig.CLIENT_ID,
+    config.googleConfig.CLIENT_SECRET,
+    config.googleConfig.REDIRECT_URI,
+  ),
+);
 
 export default authProvider;
