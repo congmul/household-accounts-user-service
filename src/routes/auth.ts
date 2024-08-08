@@ -32,7 +32,7 @@ router.get(
   }),
 );
 
-router.get("/auth-code-url/google", googleAuthProvider.getAuthCodeUrl());
+router.get("/login/google", googleAuthProvider.auth());
 router.get("/redirect/google", googleAuthProvider.handleRedirect());
 
 router.post("/signup", validate(validCreateUser), userController.createUser);
