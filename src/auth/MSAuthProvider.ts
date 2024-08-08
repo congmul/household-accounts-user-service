@@ -94,10 +94,11 @@ class AuthProvider {
           fullname: tokenResponse.account?.name || "",
           joinThrough: "microsoft",
         });
-        res.status(200).send({
-          userInfo,
-          tokens: { accessToken, idToken: tokenResponse.idToken },
-        });
+
+        // / Redirect to client with query parameters
+        res.redirect(
+          `${config.client_url}/login-process?accessToken=${accessToken}&userInfo=${encodeURIComponent(JSON.stringify(userInfo))}`,
+        );
       } catch (error) {
         next(error);
       }
@@ -153,8 +154,7 @@ class AuthProvider {
       try {
         const authCodeUrlResponse =
           await msalInstance.getAuthCodeUrl(authCodeUrlRequest);
-        // res.send({ authCodeUrl: authCodeUrlResponse });
-        res.redirect(authCodeUrlResponse);
+        res.send({ authorizeUrl: authCodeUrlResponse });
       } catch (error) {
         next(error);
       }

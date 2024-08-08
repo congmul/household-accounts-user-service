@@ -44,7 +44,7 @@ class AuthProvider {
         });
         // / Redirect to client with query parameters
         res.redirect(
-          `http://localhost:3000/login-process?accessToken=${accessToken}&userInfo=${encodeURIComponent(JSON.stringify(userInfo))}`,
+          `${config.client_url}/login-process?accessToken=${accessToken}&userInfo=${encodeURIComponent(JSON.stringify(userInfo))}`,
         );
       } catch (error) {
         console.log(error);

@@ -23,6 +23,7 @@ const env = cleanEnv(process.env, {
   MS_CLIENT_SECRET: noEmptyString(),
   GOOGLE_CLIENT_ID: noEmptyString(),
   GOOGLE_CLIENT_SECRET: noEmptyString(),
+  CLIENT_URL: noEmptyString(),
   REDIRECT_URI: noEmptyString(),
   POST_LOGOUT_REDIRECT_URI: noEmptyString(),
   GRAPH_API_ENDPOINT: noEmptyString(),
@@ -39,6 +40,7 @@ const config = {
     JWT_SECRET: env.JWT_SECRET,
     EXPIRES_IN: env.EXPIRES_IN,
   },
+  client_url: env.CLIENT_URL,
   msalConfig: {
     auth: {
       clientId: env.MS_CLIENT_ID,
