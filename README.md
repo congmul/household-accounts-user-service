@@ -27,7 +27,7 @@ Account Service is a Node.js application that provides user account management f
     ```
 2. Install dependencies:
     ```sh
-    pnpm install
+    npm install
     ```
 3. Set up environment variables:
 
@@ -38,19 +38,19 @@ Account Service is a Node.js application that provides user account management f
     pnpm run dev
     ```
 ## Endpoints
-Local: [API-specification](http://locahost:3000/api-spec)
+[API Specification](https://household-accounts-user-service.azurewebsites.net/api-spec/)
 
 ## User Flows
 1. User Initiates Login
  * The user navigates to the endpoint.
     ```sh
-    /auth/auth-code-url/${ServiceProvider}
+    /auth/login/${ServiceProvider}
     ```
  * The server constructs the authorization URL and redirects the user to the Microsoft login page / Google login page.
 
 2. User Logs In:
  * The user logs in using their Microsoft/Google account.
- * After successful authentication, Microsoft/Google redirects the user back to the application’s /redirect endpoint with an authorization code.
+ * After successful authentication, Microsoft/Google redirects to the application’s /redirect endpoint with an authorization code.
 
 3. Server Exchanges Auth Code for Tokens:
  * The server receives the authorization code and exchange it for an access token, ID token, and refresh token.
@@ -71,6 +71,7 @@ account-service/
   │ ├── routes/
   │ │    ├── auth.ts
   │ │    ├── index.ts
+  │ │    ├── user.ts
   │ │    └── swagger.ts
   │ ├── services/
   │ │    ├── index.ts
