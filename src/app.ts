@@ -22,6 +22,7 @@ app.use("/user", userRoutes);
 app.get("/health", (req: Request, res: Response) => {
   res.send({
     msg: "Account Service is healthy and ready to handle your requests.",
+    app_version: process.env.npm_package_version,
   });
 });
 
